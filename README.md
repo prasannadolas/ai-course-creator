@@ -4,7 +4,7 @@
 > **Using Google ADK & Gemini 2.0 Flash Lite**
 
 ## Project Overview
-![alt text](po.png)
+![alt text](project-overview.png)
 
 ### Problem Statement
 
@@ -166,7 +166,7 @@ The system is built upon a robust, modern backend stack designed for reliable ag
 **1. Clone the Repository**
 
 ```bash
-git clone https://github.com/yourusername/ai-course-creator.git
+git clone https://github.com/prasannadolas/ai-course-creator
 cd ai-course-creator
 ```
 
