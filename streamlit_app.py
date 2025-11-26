@@ -44,7 +44,7 @@ st.markdown(
 with st.sidebar:
     st.header("Course Settings")
     topic = st.text_input("Topic", "Enter the topic")
-    audience = st.selectbox("Audience", ["Beginners", "Intermediate", "Advanced",])
+    audience = st.selectbox("Audience", ["Beginners", "Intermediate", "Advanced"])
     start_btn = st.button("Build Course", type="primary")
 
 # --- HELPERS ---
@@ -137,7 +137,7 @@ async def run_pipeline(topic, audience, c1, c2, c3):
     full_course_content += f"## Course Syllabus\n{syllabus_text}\n\n"
     
     modules = parse_modules_from_syllabus(syllabus_text)
-    time.sleep(2)
+    time.sleep(5) # Short pause after syllabus
 
     # --- PHASE 2: MODULAR LOOP (Filling Columns 2 & 3) ---
     progress_bar = st.progress(0)
@@ -148,12 +148,11 @@ async def run_pipeline(topic, audience, c1, c2, c3):
         # --- HIDDEN DRAFTING & VISIBLE REVIEW (Column 2) ---
         final_lesson = ""
         with c2:
-            if i == 0: st.subheader("2.Lessons of Each Module")
+            if i == 0: st.subheader("2. Final Lessons")
             
-            # We combine the "Drafting" and "Polishing" visual status into one box in the Lesson column
             with st.status(f"✍️ Writing {module_title}...", expanded=True) as status:
                 
-                # 1. Internal Draft (Professor) - No Output shown
+                # 1. Internal Draft (Professor)
                 status.write("Generating deep-dive draft...")
                 runner_draft = Runner(agent=content_agent, session_service=session, app_name="course_creator")
                 draft_prompt = f"""
@@ -165,7 +164,10 @@ async def run_pipeline(topic, audience, c1, c2, c3):
                 async for event in runner_draft.run_async(session_id=session_id, user_id=user_id, new_message=wrap_message(draft_prompt)):
                     pass 
                 
-                # 2. Polishing (Reviewer) - Output shown
+                # SAFETY PAUSE 1: Pause between Draft and Review
+                time.sleep(10) 
+
+                # 2. Polishing (Reviewer)
                 status.write("Dean is polishing and formatting...")
                 runner_rev = Runner(agent=review_agent, session_service=session, app_name="course_creator")
                 rev_prompt = "Review this lesson. Improve structure, add bolding to key terms, and ensure code blocks are formatted."
@@ -174,11 +176,13 @@ async def run_pipeline(topic, audience, c1, c2, c3):
                 
                 status.update(label=f"✅ Completed: {module_title}", state="complete", expanded=False)
             
-            # Display Module Content nicely
             st.markdown(f"### {module_title}")
             with st.expander("📖 Read Lesson", expanded=True):
                 st.markdown(final_lesson)
             st.divider()
+
+        # SAFETY PAUSE 2: Pause between Lesson and Quiz
+        time.sleep(10)
 
         # --- QUIZ (Column 3) ---
         quiz_text = ""
@@ -186,20 +190,19 @@ async def run_pipeline(topic, audience, c1, c2, c3):
             if i == 0: st.subheader("3. Quizzes")
             with st.spinner(f"Creating Quiz for {module_title}..."):
                 runner = Runner(agent=quiz_agent, session_service=session, app_name="course_creator")
-                q_prompt = f"Create a short 5-question quiz specifically for '{module_title}' based on the lesson above."
+                q_prompt = f"Create a short 3-question quiz specifically for '{module_title}' based on the lesson above."
                 async for event in runner.run_async(session_id=session_id, user_id=user_id, new_message=wrap_message(q_prompt)):
                     if event.is_final_response(): quiz_text = extract_text(event)
             
             with st.expander("❓ Take Quiz"):
                 st.markdown(quiz_text)
 
-        # Append to Master File
         full_course_content += f"\n# {module_title}\n\n{final_lesson}\n\n### {module_title} Quiz\n{quiz_text}\n\n<pdf:nextpage>\n"
         
-        # Rate Limit Pause
+        # SAFETY PAUSE 3: LONG PAUSE to reset API limits before next module
         if i < len(modules) - 1:
-            with c2: st.caption("⏳ Cooling down API...")
-            time.sleep(10)
+            with c2: st.caption("⏳ Cooling down API (30s)...")
+            time.sleep(30)
 
     progress_bar.progress(100)
 
