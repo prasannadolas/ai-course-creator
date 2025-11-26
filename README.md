@@ -1,4 +1,4 @@
-\
+
 # Autonomous AI Course Creator
 
 > **Using Google ADK & Gemini 2.0 Flash Lite**
@@ -72,6 +72,8 @@ The "brain" of the operation. It initializes the session, injects the user's pro
   * **Streamlit UI:** Provides the frontend for user interaction and real-time feedback.
   * **PDF Engine:** A post-processing unit that compiles the markdown outputs from all agents into a single, styled PDF document.
 
+ ![alt text](er-diagram.png)
+
 ### Project Structure
 
 ```text
@@ -108,7 +110,6 @@ AI-COURSE-CREATOR/
 ```
 
 -----
-![alt text](er-diagram.png)
 
 ## Workflow
 ![alt text](Workflow.png)
@@ -221,7 +222,7 @@ python cli_runner.py
 
 ## Conclusion & Value
 
-The **Autonomous AI Course Creator** proves that complex, knowledge-intensive tasks like instructional design can be effectively automated through a sophisticated multi-agent system architecture. By grounding the AI with real-time search data (DuckDUCkGo Grounding) and implementing adversarial feedback loops (via the Reviewer Agent), we have built a system that balances the speed of AI with the quality control of human oversight.
+The **Autonomous AI Course Creator** proves that complex, knowledge-intensive tasks like instructional design can be effectively automated through a sophisticated multi-agent system architecture. By grounding the AI with real-time search data (Goggle Grounding) and implementing adversarial feedback loops (via the Reviewer Agent), we have built a system that balances the speed of AI with the quality control of human oversight.
 
 For Learning & Development (L\&D) teams, educators, and EdTech platforms, this tool transforms content creation from a slow, expensive bottleneck into a scalable utility. It offers a significant acceleration in speed-to-market and democratizes access to rapid, high-quality curriculum development, ensuring that educational material can keep pace with the speed of technological innovation.
 
