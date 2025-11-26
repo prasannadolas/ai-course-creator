@@ -1,0 +1,21 @@
+import os
+from dotenv import load_dotenv
+from google.adk.models.google_llm import Gemini
+
+# Load environment variables
+load_dotenv()
+
+def get_gemini_model():
+    """
+    Returns a configured Gemini model instance for ADK agents.
+    """
+    api_key = os.getenv("GOOGLE_API_KEY")
+    if not api_key:
+        raise ValueError("❌ Critical Error: GOOGLE_API_KEY not found in .env")
+
+    # You can easily switch models here
+    return Gemini(
+        model="gemini-1.5-flash",
+        api_key=api_key,
+        # temperature=0.7 control creativity
+    )
