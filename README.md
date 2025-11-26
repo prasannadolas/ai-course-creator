@@ -4,7 +4,7 @@
 > **Using Google ADK & Gemini 2.0 Flash Lite**
 
 ## Project Overview
-![alt text](project-overview.png)
+![Project Overview](diagram_folder/project_overview.png)
 
 ### Problem Statement
 
@@ -42,7 +42,8 @@ Traditional LLM approaches often involve a single prompt like "Write a course on
 ## Architecture
 
 ## Architectural Diagram
-![alt text](Architecture.png)
+![Architecture Diagram](diagram_folder/Architecture.png) 
+
 ### Design Philosophy
 
 The architecture of the Autonomous AI Course Creator is built on the principles of Modularity, Orchestration, and Reliability.
@@ -72,7 +73,7 @@ The "brain" of the operation. It initializes the session, injects the user's pro
   * **Streamlit UI:** Provides the frontend for user interaction and real-time feedback.
   * **PDF Engine:** A post-processing unit that compiles the markdown outputs from all agents into a single, styled PDF document.
 
- ![alt text](er-diagram.png)
+ ![ER Diagram](diagram_folder/Er-diagram.png)
 
 ### Project Structure
 
@@ -103,7 +104,7 @@ AI-COURSE-CREATOR/
 ├── .env                    # API Keys (Excluded from git)
 ├── .gitignore              # Git ignore rules
 ├── check_models.py         # Diagnostic script for API access
-├── cli_runner.py           # 🖥️ CLI entry point (Developer Mode)
+├── cli_runner.py           # CLI entry point (Developer Mode)
 ├── config.py               # Central config (Model selection)
 ├── requirements.txt        # Python dependencies
 └── streamlit_app.py        # Web App entry point (User Mode)
@@ -112,7 +113,7 @@ AI-COURSE-CREATOR/
 -----
 
 ## Workflow
-![alt text](Workflow.png)
+![Workflow Diagram](diagram_folder/Workflow.png)
 
 The system follows a structured, automated multi-agent workflow:
 
